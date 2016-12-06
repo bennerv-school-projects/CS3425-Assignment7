@@ -1,0 +1,37 @@
+MariaDB [llpeters]> create table topic (name varchar(100) primary key, user(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(20))' at line 1
+MariaDB [llpeters]> create table topic (name varchar(100) primary key, user varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [llpeters]> describe topic;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| name  | varchar(100) | NO   | PRI | NULL    |       |
+| user  | varchar(20)  | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+MariaDB [llpeters]> create table reply(topic_name varchar(100) foreign key, user varchar(20), contents varchar(100));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key, user varchar(20), contents varchar(100))' at line 1
+MariaDB [llpeters]> create table reply(topic_name varchar(100) foreign key references topic, user varchar(20), contents varchar(100));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key references topic, user varchar(20), contents varchar(100))' at line 1
+MariaDB [llpeters]> create table reply(user varchar(20), contents varchar(100), foreign key topic_name varchar(100) reference topic);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'varchar(100) reference topic)' at line 1
+MariaDB [llpeters]> Ctrl-C -- exit!
+Aborted
+MariaDB [llpeters]> create table reply(topic_name varchar(100), user varchar(20), contents varchar(100), foreign key (topic_name) references topic (name));
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [llpeters]> describe reply;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| topic_name | varchar(100) | YES  | MUL | NULL    |       |
+| user       | varchar(20)  | YES  |     | NULL    |       |
+| contents   | varchar(100) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+MariaDB [llpeters]> Ctrl-C -- exit!
+Aborted
