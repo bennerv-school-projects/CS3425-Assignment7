@@ -1,31 +1,36 @@
 <head>
 </head>
 
+
 <?php
+	include_once "functions.php";
+	$stuff= new userFunctions():
+	
+if(isset($_POST['submitButton'] and  ) ) {
+	$result = $post->signup($_POST['username'], $_POST['major'], $_POST['name'], $_POST['password']);
+	
+
 try {
-  $dbh = new PDO( 'mysql:host=classdb.it.mtu.edu;dbname=airline', "cs3425gr",
-   "cs3425gr");
-  $dbh ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  
+  $dbh = new PDO( 'mysql:host=classdb.it.mtu.edu;dbname=llpeters', "llpeters",
+   "789456123");
+  $dbh ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+	echo $_POST["topic"]." ".$_POST["username"];
   echo "<table border='1'>";
   echo "<TR>";
-  echo "<TH> Topic </TH>";
+  echo "<TH> Reply </TH>";
   echo "<TH> Author </TH>";
-  echo "<TH> Replies </TH>";
   echo "</TR>";
-  foreach ($dbh->query("select name, user from topic") as $row){
+  foreach ($dbh->query('select contents, user from reply where name='.$_POST["topic"].'') as $row){
     echo "<TR>";
-    echo '<TD><a href="topicFilled.php">'.$row[0].'</a>yy</TD>';
-    echo "<TD>".$row[1]."</TD>";
-		$res_count = dbh->query('select count(*) from reply where topic_name='.$row[0].'');
-		$replies = $res_count->fetch();
-		echo "<TD>".$replies[0]."</TD>"; 
+    echo '<TD>'.$row[0].'</TD>';
+    echo '<TD>'.$row[1].'</TD>';
     echo "</TR>";
   }
   echo "</table>";
 
 	echo'<form action="">' 
- 
+	echo '<input type="textbox" name="reply">';
+	echo '<input type="text" name="user">';
 }
 catch (PDOException $e) {
   print "Error!".$e->getMessage()."</br>";
