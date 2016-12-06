@@ -6,9 +6,13 @@
 	include_once "functions.php";
 	$stuff= new userFunctions():
 	
-if(isset($_POST['submitButton'] and  ) ) {
-	$result = $post->signup($_POST['username'], $_POST['major'], $_POST['name'], $_POST['password']);
-	
+if(isset($_POST['submitButton'] and isset($_POST["reply"] ) ) {
+	if (!isset ($_POST["user"]))
+		$user = "anonymous";
+	else
+		$user = $_POST["user"];
+		$stuff->createReply($_POST["topic"], $user, $_POST["reply"];
+}	
 
 try {
   $dbh = new PDO( 'mysql:host=classdb.it.mtu.edu;dbname=llpeters', "llpeters",
@@ -31,6 +35,8 @@ try {
 	echo'<form action="">' 
 	echo '<input type="textbox" name="reply">';
 	echo '<input type="text" name="user">';
+	echo '<input type="submit" name="submitButton" value="Reply">';
+	echo '</form>';
 }
 catch (PDOException $e) {
   print "Error!".$e->getMessage()."</br>";
